@@ -28,6 +28,27 @@ RUN apk --no-cache update \
   && cd .. && rm -Rf git-secret \
   && apk del --purge build-dependencies \
   && rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip \
-  && rm -rf helm-${HELM_VERSION}-linux-amd64.tar.gz
+  && rm -rf helm-${HELM_VERSION}-linux-amd64.tar.gz \
+  && wget https://dl.google.com/dl/cloudsdk/channels/rapid/google-cloud-sdk.zip\
+  && unzip google-cloud-sdk.zip\
+  && rm google-cloud-sdk.zip\
+  && google-cloud-sdk/install.sh\
+    --usage-reporting=true\
+    --path-update=true\
+    --bash-completion=true\
+    --rc-path=/.bashrc\
+    --additional-components\
+    alpha\
+    beta\
+    bigtable\
+    bq\
+    cloud-datastore-emulator\
+    docker-credential-gcr\
+    gcd-emulator\
+    gsutil\
+    pubsub-emulator\
+  && rm -rf /var/cache/apk/*\
+  && google-cloud-sdk/bin/gcloud config set --installation component_manager/disable_update_check true\
+  && sed -i -- 's/\"disable_updater\": false/\"disable_updater\": true/g' /google-cloud-sdk/lib/googlecloudsdk/core/config.json
 
 CMD ["/bin/sh"]
