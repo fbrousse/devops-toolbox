@@ -51,4 +51,6 @@ RUN apk --no-cache update \
   && google-cloud-sdk/bin/gcloud config set --installation component_manager/disable_update_check true\
   && sed -i -- 's/\"disable_updater\": false/\"disable_updater\": true/g' /google-cloud-sdk/lib/googlecloudsdk/core/config.json
 
+ENV PATH "$PATH:/google-cloud-sdk/bin"
+
 CMD ["/bin/sh"]
