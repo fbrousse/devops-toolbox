@@ -4,7 +4,7 @@ MAINTAINER fabien.brousse@yesiddo.com
 # https://kubernetes.io/docs/tasks/kubectl/install/
 # latest stable kubectl: curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
 ENV KUBECTL_VERSION=v1.12.1
-ENV TERRAFORM_VERSION=0.11.8
+ENV TERRAFORM_VERSION=0.11.11
 ENV HELM_VERSION=v2.12.3
 ENV AWS_AUTH_VERSION=0.3.0
 
