@@ -6,7 +6,7 @@ MAINTAINER fabien.brousse@yesiddo.com
 ENV KUBECTL_VERSION=v1.18.2
 ENV TERRAFORM_VERSION=0.12.28
 ENV HELM_VERSION=v2.16.9
-ENV AWS_AUTH_VERSION=0.3.0
+ENV AWS_AUTH_VERSION=0.5.0
 
 RUN apk --no-cache update \
   && apk --no-cache add ca-certificates python3 py-pip py-setuptools groff less git gnupg bash curl gawk \
