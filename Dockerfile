@@ -9,7 +9,7 @@ ENV HELM_VERSION=v2.16.9
 ENV AWS_AUTH_VERSION=0.3.0
 
 RUN apk --no-cache update \
-  && apk --no-cache add ca-certificates python py-pip py-setuptools groff less git gnupg bash curl gawk \
+  && apk --no-cache add ca-certificates python3 py-pip py-setuptools groff less git gnupg bash curl gawk \
   && apk --no-cache add --virtual build-dependencies make \
   && pip --no-cache-dir install awscli \
   && curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl \
@@ -44,7 +44,6 @@ RUN apk --no-cache update \
     bq\
     cloud-datastore-emulator\
     docker-credential-gcr\
-    gcd-emulator\
     gsutil\
     pubsub-emulator\
   && rm -rf /var/cache/apk/*\
