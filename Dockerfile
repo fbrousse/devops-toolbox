@@ -1,5 +1,6 @@
 FROM scaleway/cli:v2.3.0 as scaleway
 FROM d3fk/s3cmd as s3cmd
+FROM k14s/image as kapp
 FROM alpine:latest
 MAINTAINER fabien.brousse@yesiddo.com
 
@@ -57,6 +58,7 @@ RUN wget -O- https://github.com/vmware-tanzu/carvel-kapp/releases/download/v0.36
 
 COPY --from=scaleway /scw /usr/local/bin
 COPY --from=s3cmd /usr/bin/s3cmd /usr/local/bin
+COPY --from=kapp /usr/local/bin/kapp /usr/local/bin
 
 ENV PATH "$PATH:/google-cloud-sdk/bin"
 
