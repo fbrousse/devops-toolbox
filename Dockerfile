@@ -1,10 +1,13 @@
+FROM scaleway/cli:v2.3.0 as scaleway
+FROM d3fk/s3cmd as s3cmd
+FROM k14s/image as kapp
 FROM alpine:latest
 MAINTAINER fabien.brousse@yesiddo.com
 
 # https://kubernetes.io/docs/tasks/kubectl/install/
 # latest stable kubectl: curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
 ENV KUBECTL_VERSION=v1.18.2
-ENV TERRAFORM_VERSION=0.14.7
+ENV TERRAFORM_VERSION=0.14.8
 ENV HELM_VERSION=v2.16.9
 ENV AWS_AUTH_VERSION=0.5.0
 
@@ -49,6 +52,13 @@ RUN apk --no-cache update \
   && rm -rf /var/cache/apk/*\
   && google-cloud-sdk/bin/gcloud config set --installation component_manager/disable_update_check true\
   && sed -i -- 's/\"disable_updater\": false/\"disable_updater\": true/g' /google-cloud-sdk/lib/googlecloudsdk/core/config.json
+RUN wget -O- https://github.com/vmware-tanzu/carvel-kapp/releases/download/v0.36.0/kapp-linux-amd64 > /usr/local/bin/kapp && \
+  echo "22fe308f1d9ebbb829a6ea10ca80d9468ff4b9aa911b0c33788fe67d04ccb383  /usr/local/bin/kapp" | sha256sum -c - && \
+  chmod +x /usr/local/bin/kapp && kapp version
+
+COPY --from=scaleway /scw /usr/local/bin
+COPY --from=s3cmd /usr/bin/s3cmd /usr/local/bin
+COPY --from=kapp /usr/local/bin/kapp /usr/local/bin
 
 ENV PATH "$PATH:/google-cloud-sdk/bin"
 
